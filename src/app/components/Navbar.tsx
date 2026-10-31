@@ -14,7 +14,6 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { data: session, isPending } = authClient.useSession();
-
   const user = session?.user ?? null;
 
   const publicLinks = [
@@ -31,10 +30,7 @@ const Navbar = () => {
   const navLinks = user ? [...publicLinks, ...privateLinks] : publicLinks;
 
   const isActive = (href: string) => {
-    if (href === "/") {
-      return pathname === "/";
-    }
-
+    if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
@@ -46,8 +42,8 @@ const Navbar = () => {
     }`;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200/80 bg-white/95 backdrop-blur-md dark:border-gray-800 dark:bg-gray-950/95">
-      <nav className="mx-auto flex min-h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200/80 bg-white/95 backdrop-blur-md dark:border-gray-800 dark:bg-gray-950/95">
+      <nav className="mx-auto flex min-h-[68px] w-full max-w-7xl items-center justify-between px-3 sm:min-h-20 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link
           href="/"
@@ -60,14 +56,16 @@ const Navbar = () => {
             width={42}
             height={42}
             priority
-            className="h-12 w-12 object-contain"
+            className="h-10 w-10 object-contain sm:h-12 sm:w-12"
           />
 
           <div>
-            <h2 className="font-serif text-2xl font-bold tracking-tight text-[#174D38] dark:text-green-300">
+            <h2 className="font-serif text-xl font-bold tracking-tight text-[#174D38] dark:text-green-300 sm:text-2xl">
               BookNook
             </h2>
-            <p className="text-black">An Online Book Library</p>
+            <p className="text-[11px] leading-tight text-gray-700 dark:text-gray-300 sm:text-sm">
+              An Online Book Library
+            </p>
           </div>
         </Link>
 
@@ -80,7 +78,6 @@ const Navbar = () => {
               className={linkClass(link.href)}
             >
               {link.name}
-
               {isActive(link.href) && (
                 <span className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[#174D38] dark:bg-green-300" />
               )}
@@ -88,31 +85,35 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Authentication Component */}
-        <div className="flex items-center gap-3">
+        {/* Desktop Authentication */}
+        <div className="hidden items-center lg:flex">
           <AuthButtons user={user} isPending={isPending} />
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={
-              isMenuOpen ? "Close navigation menu" : "Open navigation menu"
-            }
-            aria-expanded={isMenuOpen}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800 lg:hidden"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          type="button"
+          aria-label={
+            isMenuOpen ? "Close navigation menu" : "Open navigation menu"
+          }
+          aria-expanded={isMenuOpen}
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800 lg:hidden"
+        >
+          {isMenuOpen ? <X size={23} /> : <Menu size={23} />}
+        </button>
       </nav>
 
       {/* Mobile Navigation */}
       <div
         className={`overflow-hidden border-t border-gray-200 bg-white transition-all duration-300 dark:border-gray-800 dark:bg-gray-950 lg:hidden ${
-          isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 border-t-0 opacity-0"
+          isMenuOpen
+            ? "max-h-[500px] opacity-100"
+            : "max-h-0 border-t-0 opacity-0"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 sm:px-6">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-4 sm:px-6">
+          {/* Navigation Links */}
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -125,6 +126,16 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
+
+          {/* Mobile Authentication */}
+          <div className="mt-3 border-t border-gray-200 pt-4 dark:border-gray-800">
+            <AuthButtons
+              user={user}
+              isPending={isPending}
+              isMobile
+              onNavigate={() => setIsMenuOpen(false)}
+            />
+          </div>
         </div>
       </div>
     </header>

@@ -15,9 +15,16 @@ interface AuthUser {
 interface AuthButtonsProps {
   user: AuthUser | null;
   isPending: boolean;
+  isMobile?: boolean;
+  onNavigate?: () => void;
 }
 
-const AuthButtons = ({ user, isPending }: AuthButtonsProps) => {
+const AuthButtons = ({
+  user,
+  isPending,
+  isMobile = false,
+  onNavigate,
+}: AuthButtonsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -31,6 +38,7 @@ const AuthButtons = ({ user, isPending }: AuthButtonsProps) => {
       }
 
       setIsOpen(false);
+      onNavigate?.();
       router.push("/");
       router.refresh();
     } catch (error) {
@@ -47,17 +55,25 @@ const AuthButtons = ({ user, isPending }: AuthButtonsProps) => {
   // Logged out UI
   if (!user) {
     return (
-      <div className="flex items-center gap-2">
+      <div
+        className={`flex ${isMobile ? "w-full flex-col" : "items-center"} gap-2`}
+      >
         <Link
           href="/login"
-          className="rounded-lg px-4 py-2 text-sm font-semibold text-[#174D38] transition-colors hover:bg-[#174D38]/10 dark:text-green-300 dark:hover:bg-white/10"
+          onClick={onNavigate}
+          className={`inline-flex items-center justify-center rounded-lg border border-[#174D38] px-4 py-2 text-sm font-semibold text-[#174D38] transition-colors hover:bg-[#174D38]/10 dark:border-green-300 dark:text-green-300 dark:hover:bg-white/10 ${
+            isMobile ? "w-full" : ""
+          }`}
         >
           Login
         </Link>
 
         <Link
           href="/register"
-          className="hidden rounded-lg bg-[#174D38] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#103B2B] sm:inline-flex"
+          onClick={onNavigate}
+          className={`inline-flex items-center justify-center rounded-lg bg-[#174D38] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#103B2B] dark:bg-green-300 dark:text-gray-950 dark:hover:bg-green-200 ${
+            isMobile ? "w-full" : ""
+          }`}
         >
           Register
         </Link>
@@ -67,24 +83,34 @@ const AuthButtons = ({ user, isPending }: AuthButtonsProps) => {
 
   // Logged in UI
   return (
-    <div className="relative">
+    <div className={`relative ${isMobile ? "w-full" : ""}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Open user menu"
         aria-expanded={isOpen}
-        className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-gray-100 dark:hover:bg-white/10"
+        className={`flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-gray-100 dark:hover:bg-white/10 ${
+          isMobile ? "w-full justify-between" : ""
+        }`}
       >
-        {user.image ? (
-          <img
-            src={user.image}
-            alt={user.name}
-            className="h-10 w-10 rounded-full border-2 border-[#174D38] object-cover"
-          />
-        ) : (
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#174D38] text-white">
-            <UserRound size={20} />
-          </div>
-        )}
+        <span className="flex items-center gap-2">
+          {user.image ? (
+            <img
+              src={user.image}
+              alt={user.name}
+              className="h-10 w-10 rounded-full border-2 border-[#174D38] object-cover"
+            />
+          ) : (
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#174D38] text-white">
+              <UserRound size={20} />
+            </span>
+          )}
+
+          {isMobile && (
+            <span className="text-sm font-semibold text-gray-800 dark:text-white">
+              {user.name}
+            </span>
+          )}
+        </span>
 
         <ChevronDown
           size={16}
@@ -100,7 +126,9 @@ const AuthButtons = ({ user, isPending }: AuthButtonsProps) => {
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="absolute right-0 z-50 mt-3 w-60 rounded-xl border border-gray-200 bg-white p-3 shadow-xl dark:border-gray-700 dark:bg-gray-900">
+          <div
+            className={`absolute right-0 z-50 mt-3 w-60 rounded-xl border border-gray-200 bg-white p-3 shadow-xl dark:border-gray-700 dark:bg-gray-900 ${isMobile ? "left-0 right-auto" : ""}`}
+          >
             <div className="border-b border-gray-200 px-3 py-3 dark:border-gray-700">
               <p className="truncate font-semibold text-gray-900 dark:text-white">
                 {user.name}
@@ -110,7 +138,10 @@ const AuthButtons = ({ user, isPending }: AuthButtonsProps) => {
 
             <Link
               href="/profile"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                onNavigate?.();
+              }}
               className="mt-2 flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
             >
               <UserRound size={17} />

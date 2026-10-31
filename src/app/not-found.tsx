@@ -11,7 +11,7 @@ export default function NotFound() {
         </p>
 
         {/* Message */}
-        <h1 className="mb-4 font-serif text-3xl font-bold sm:text-4xl">
+        <h1 className="mb-4  text-3xl font-bold sm:text-4xl">
           Looks Like This Page Is Missing!
         </h1>
 

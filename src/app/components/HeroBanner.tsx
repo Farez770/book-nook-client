@@ -13,6 +13,13 @@ import "swiper/css/pagination";
 
 const slides = [
   {
+    title: "A small library, open to everyone",
+    description:
+      "Browse the shelf, borrow a book for a week, or leave one you have finished for the next reader. Free to join, and it takes a minute.",
+    image: "/slider-img-main.jpg",
+    highlight: "everyone",
+  },
+  {
     title: "Discover Your Next Great Book",
     description:
       "Explore thousands of books, from timeless classics to modern bestsellers, all in one place.",

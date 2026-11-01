@@ -87,7 +87,7 @@ const AuthButtons = ({
           type="button"
           aria-label="Open user profile menu"
           aria-expanded={isOpen}
-          className={`flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-gray-100 dark:hover:bg-white/10 ${isMobile ? "w-full justify-between" : ""}`}
+          className={`flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-gray-100 dark:hover:bg-white/10 ${isMobile ? "w-full justify-between" : ""} cursor-pointer`}
         >
           <span className="flex items-center gap-2">
             {user.image ? (
@@ -169,7 +169,7 @@ const AuthButtons = ({
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50 dark:hover:bg-red-950"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50 dark:hover:bg-red-950 cursor-pointer"
           >
             <LogOut size={17} />
             Sign Out

@@ -56,7 +56,7 @@ const Navbar = () => {
             width={42}
             height={42}
             priority
-            className="h-10 w-10 object-contain sm:h-12 sm:w-12"
+            className="h-10 w-10 object-cover rounded-lg sm:h-12 sm:w-12"
           />
 
           <div>
@@ -113,11 +113,11 @@ const Navbar = () => {
         }`}
       >
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-4 sm:px-6">
-          {/* Navigation Links */}
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
+              prefetch={false}
               onClick={() => setIsMenuOpen(false)}
               className={`${linkClass(link.href)} w-full ${
                 isActive(link.href) ? "font-semibold" : ""
@@ -127,7 +127,6 @@ const Navbar = () => {
             </Link>
           ))}
 
-          {/* Mobile Authentication */}
           <div className="mt-3 border-t border-gray-200 pt-4 dark:border-gray-800">
             <AuthButtons
               user={user}

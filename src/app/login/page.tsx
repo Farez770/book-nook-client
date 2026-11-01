@@ -8,26 +8,46 @@ import {
   InputGroup,
   Label,
   TextField,
+  toast,
 } from "@heroui/react";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const [isVisible, setIsVisible] = useState(false);
 
-  const onSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleLoginSubmit = async (
+    e: React.SyntheticEvent<HTMLFormElement>,
+  ) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
-
+    const user = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+    };
+    console.log(user);
     // Convert FormData to plain object
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
-    });
 
-    alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
+    const { data, error } = await authClient.signIn.email({
+      email: user.email,
+      password: user.password,
+      rememberMe: true,
+      callbackURL: "/",
+    });
+    if (data) {
+      console.log(data);
+    }
+
+    if (error) {
+      toast.warning(
+        error.message || "Something is wrong,Invalid email or password",
+      );
+    }
+
+    toast.success("You'r Loggin successfull");
   };
 
   return (
@@ -46,7 +66,10 @@ export default function LoginPage() {
         </p>
       </div>
       <div className="w-full max-w-md rounded-2xl border border-[#E8E0D5] bg-white px-6 py-5 shadow-[0_12px_40px_rgba(23,77,56,0.07)] sm:p-9">
-        <Form className="flex w-full flex-col gap-5" onSubmit={onSubmit}>
+        <Form
+          className="flex w-full flex-col gap-5"
+          onSubmit={handleLoginSubmit}
+        >
           <TextField isRequired name="email" type="email">
             <Label className="mb-2 text-sm font-medium text-[#26372F]">
               Email Address

@@ -23,7 +23,7 @@ const Footer = () => {
                 alt="BookNook Logo"
                 width={45}
                 height={45}
-                className="object-contain"
+                className="h-10 w-auto"
               />
               <span className="font-serif text-2xl font-bold tracking-wide">
                 Book<span className="text-[#C5EF70]">Nook</span>

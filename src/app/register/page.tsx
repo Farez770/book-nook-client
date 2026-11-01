@@ -11,26 +11,52 @@ import {
   InputGroup,
   Label,
   TextField,
+  toast,
 } from "@heroui/react";
 import { useState } from "react";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 export default function RegisterPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleCon, setIsVisibleCon] = useState(false);
 
-  const onSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const user = Object.fromEntries(formData.entries()) as {
+      name: string;
+      image: string;
+      email: string;
+      password: string;
+    };
+    console.log(user);
 
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
+    const { data, error } = await authClient.signUp.email({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      image: user.image,
+      callbackURL: "/",
     });
 
-    alert("Form submitted successfully!");
+    if (data) {
+      console.log(data);
+      redirect("/");
+    }
+    if (error) {
+      toast.warning(
+        error.message || "Something is wrong, Please check your information",
+      );
+    }
+
+    toast.success("You'r account created successfully");
+    // alert("Form submitted successfully!");
+    form.reset();
   };
 
   return (
@@ -47,7 +73,7 @@ export default function RegisterPage() {
       </div>
       <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-xl shadow-[#174D38]/5 sm:p-8">
         {/* Registration Form */}
-        <Form className="w-full" onSubmit={onSubmit}>
+        <Form className="w-full" onSubmit={handleOnSubmit}>
           <Fieldset className="w-full">
             <Fieldset.Legend className="sr-only">
               Registration Form
@@ -79,13 +105,13 @@ export default function RegisterPage() {
                 <FieldError />
               </TextField>
 
-              <TextField isRequired name="name" type="url">
+              <TextField isRequired name="image" type="url">
                 <Label className="mb-2 text-sm font-medium text-gray-700">
                   Profile Image URL
                 </Label>
                 <Input
-                  placeholder="John Doe"
                   className="rounded-lg border-gray-300 placeholder:text-gray-400"
+                  placeholder="https://example.com/photo.jpg"
                 />
                 <FieldError />
               </TextField>
@@ -124,10 +150,12 @@ export default function RegisterPage() {
                 </Label>
                 <InputGroup className="rounded-lg border-gray-300">
                   <InputGroup.Input
+                    aria-label="Password"
                     className="w-full text-black placeholder:text-gray-400"
                     type={isVisible ? "text" : "password"}
                     placeholder="Enter your password"
                   />
+
                   <InputGroup.Suffix className="pe-1">
                     <Button
                       isIconOnly
@@ -145,6 +173,9 @@ export default function RegisterPage() {
                   </InputGroup.Suffix>
                 </InputGroup>
                 <FieldError />
+                <Description className="text-gray-500 mt-1">
+                  Must be at least 8 characters with 1 uppercase and 1 number
+                </Description>
               </TextField>
 
               <TextField
@@ -170,6 +201,7 @@ export default function RegisterPage() {
                 </Label>
                 <InputGroup className="rounded-lg border-gray-300 ">
                   <InputGroup.Input
+                    aria-label="Password"
                     className="w-full placeholder:text-gray-400"
                     type={isVisibleCon ? "text" : "password"}
                     placeholder="Confirm your password"
@@ -193,6 +225,9 @@ export default function RegisterPage() {
                   </InputGroup.Suffix>
                 </InputGroup>
                 <FieldError />
+                <Description className="text-gray-500 mt-1">
+                  Must be at least 8 characters with 1 uppercase and 1 number
+                </Description>
               </TextField>
             </FieldGroup>
 

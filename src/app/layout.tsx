@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Toast } from "@heroui/react";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${spaceGrotesk.className}  h-full antialiased`}>
       {/*${geistSans.variable} ${geistMono.variable} */}
       <body className="min-h-screen flex flex-col bg-[#FAF9F6]">
+        <Toast.Provider placement="top end" />
         <Navbar />
         <main>{children}</main>
         <Footer />

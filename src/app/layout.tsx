@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Toast } from "@heroui/react";
+import { Toaster } from "@/components/ui/sonner";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       {/*${geistSans.variable} ${geistMono.variable} */}
       <body className="min-h-screen flex flex-col bg-[#FAF9F6]">
         <Toast.Provider placement="top end" />
+        <Toaster />
         <Navbar />
         <main>{children}</main>
         <Footer />

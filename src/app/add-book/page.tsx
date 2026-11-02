@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { ArrowLeft, BookPlus } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
-import { toast } from "@heroui/react";
+import { toast } from "sonner";
+// import { toast } from "@heroui/react";
 
 export default function AddBookPage() {
   const { data: session } = authClient.useSession();
@@ -31,7 +32,8 @@ export default function AddBookPage() {
 
     form.reset();
 
-    toast.success("Your Book added successfully! 📚");
+    // toast.success("Your Book added successfully! 📚");
+    toast.success("Your Book added successfully!");
   };
 
   return (

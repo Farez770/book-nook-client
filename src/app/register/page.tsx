@@ -11,7 +11,7 @@ import {
   InputGroup,
   Label,
   TextField,
-  toast,
+  // toast,
 } from "@heroui/react";
 import { useState } from "react";
 import Link from "next/link";
@@ -19,6 +19,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -38,16 +39,19 @@ export default function RegisterPage() {
     // console.log(user);
 
     if (!user.name || !user.email || !user.password || !user.confirmPassword) {
+      // toast.warning("Please fill up all the information"); //heroui
       toast.warning("Please fill up all the information");
       return;
     }
 
     if (user.password.length < 8) {
+      // toast.warning("Password must be 8 character");
       toast.warning("Password must be 8 character");
       return;
     }
 
     if (user.password !== user.confirmPassword) {
+      // toast.warning("The password are not match");
       toast.warning("The password are not match");
       return;
     }
@@ -65,11 +69,17 @@ export default function RegisterPage() {
       redirect("/");
     }
     if (error) {
+      // toast.warning(
+      //   error.message || "Something is wrong, Please check your information",
+      // );
       toast.warning(
         error.message || "Something is wrong, Please check your information",
       );
     }
 
+    // toast.success(
+    //   "You'r account created successfully. please Sign in for continue",
+    // );
     toast.success(
       "You'r account created successfully. please Sign in for continue",
     );

@@ -8,13 +8,14 @@ import {
   InputGroup,
   Label,
   TextField,
-  toast,
+  // toast
 } from "@heroui/react";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -42,11 +43,17 @@ export default function LoginPage() {
     }
 
     if (error) {
+      // toast.warning(
+      //   error.message || "Something is wrong,Invalid email or password",
+      // );
       toast.warning(
         error.message || "Something is wrong,Invalid email or password",
       );
     }
 
+    // toast.success(
+    //   "You'r Loggin successfull. Please sign in to proceed further.",
+    // );
     toast.success(
       "You'r Loggin successfull. Please sign in to proceed further.",
     );

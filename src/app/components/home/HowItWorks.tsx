@@ -29,11 +29,12 @@ const HowItWorks = () => {
             How It Works
           </span>
 
-          <h2 className="font-serif text-3xl font-bold  text-[#171717] sm:text-4xl md:text-5xl">
+          <h2 className="font-serif text-3xl font-bold  text-[#20392C] sm:text-4xl md:text-5xl">
+            {/* #171717 */}
             Borrow a book in three steps
           </h2>
 
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-[#55504B] sm:text-base">
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-6 text-[#55504B] sm:text-base">
             No membership fees, no complicated process. Borrow a book for seven
             days and return it whenever you finish reading.
           </p>

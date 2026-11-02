@@ -47,7 +47,15 @@ export default function LoginPage() {
       );
     }
 
-    toast.success("You'r Loggin successfull");
+    toast.success(
+      "You'r Loggin successfull. Please sign in to proceed further.",
+    );
+  };
+  const handleGoogleLogin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
   };
 
   return (
@@ -144,6 +152,7 @@ export default function LoginPage() {
         </div>
 
         <Button
+          onClick={handleGoogleLogin}
           type="button"
           className="flex w-full items-center justify-center gap-3 rounded-lg border border-[#DCD5CB] bg-white py-2 font-medium text-[#26372F] transition-colors hover:bg-[#FAF7F2]"
         >

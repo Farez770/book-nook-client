@@ -33,8 +33,24 @@ export default function RegisterPage() {
       image: string;
       email: string;
       password: string;
+      confirmPassword: string;
     };
     console.log(user);
+
+    if (!user.name || !user.email || !user.password || !user.confirmPassword) {
+      toast.warning("Please fill up all the information");
+      return;
+    }
+
+    if (user.password.length < 8) {
+      toast.warning("Password must be 8 character");
+      return;
+    }
+
+    if (user.password !== user.confirmPassword) {
+      toast.warning("The password are not match");
+      return;
+    }
 
     const { data, error } = await authClient.signUp.email({
       name: user.name,
@@ -57,6 +73,12 @@ export default function RegisterPage() {
     toast.success("You'r account created successfully");
     // alert("Form submitted successfully!");
     form.reset();
+  };
+  const handleGoogleRegister = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
   };
 
   return (
@@ -254,6 +276,7 @@ export default function RegisterPage() {
 
         {/* Google Registration */}
         <Button
+          onClick={handleGoogleRegister}
           type="button"
           variant="outline"
           className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-2 font-medium text-gray-700 transition-colors hover:bg-gray-50"

@@ -28,7 +28,7 @@ export default function LoginPage() {
       email: string;
       password: string;
     };
-    console.log(user);
+    // console.log(user);
     // Convert FormData to plain object
 
     const { data, error } = await authClient.signIn.email({
@@ -38,7 +38,7 @@ export default function LoginPage() {
       callbackURL: "/",
     });
     if (data) {
-      console.log(data);
+      // console.log(data);
     }
 
     if (error) {

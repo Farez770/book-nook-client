@@ -35,7 +35,7 @@ export default function RegisterPage() {
       password: string;
       confirmPassword: string;
     };
-    console.log(user);
+    // console.log(user);
 
     if (!user.name || !user.email || !user.password || !user.confirmPassword) {
       toast.warning("Please fill up all the information");
@@ -61,7 +61,7 @@ export default function RegisterPage() {
     });
 
     if (data) {
-      console.log(data);
+      // console.log(data);
       redirect("/");
     }
     if (error) {
@@ -70,7 +70,9 @@ export default function RegisterPage() {
       );
     }
 
-    toast.success("You'r account created successfully");
+    toast.success(
+      "You'r account created successfully. please Sign in for continue",
+    );
     // alert("Form submitted successfully!");
     form.reset();
   };

@@ -50,7 +50,7 @@ export default async function BooksCard() {
             </CardDescription>
           </CardHeader>
           <CardFooter className="mt-auto p-5 pt-0">
-            <Link href="/books" className="w-full">
+            <Link href={`/books/${book._id}`} className="w-full">
               <Button className="w-full cursor-pointer rounded-lg bg-[#174D38] text-white transition-colors hover:bg-[#103B2A]">
                 View Details
               </Button>

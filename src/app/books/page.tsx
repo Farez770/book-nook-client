@@ -1,8 +1,13 @@
 import React, { Suspense } from "react";
 import BooksCard from "../components/BooksCard";
 import { BookOpen, Sparkles } from "lucide-react";
+import IBookType from "@/lib/bookType";
 
-const AllBooksPage = () => {
+const AllBooksPage = async () => {
+  const res = await fetch("http://localhost:8000/books");
+  const bookInfo: IBookType[] = await res.json();
+  console.log(bookInfo);
+
   return (
     <main className="min-h-screen bg-[#FAF9F6] px-4 py-8 sm:px-6 sm:pb-16 sm:pt-8">
       <div className="mx-auto max-w-7xl">
@@ -37,7 +42,7 @@ const AllBooksPage = () => {
             </div>
           }
         >
-          <BooksCard />
+          <BooksCard bookInfo={bookInfo} />
         </Suspense>
       </div>
     </main>

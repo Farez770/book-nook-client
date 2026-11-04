@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import BooksCard from "../BooksCard";
 
 const NewArrivals = async () => {
-  const res = await fetch("http://localhost:8000/books");
+  const res = await fetch("http://localhost:8000/new-arrivals");
   const books: IBookType[] = await res.json();
   console.log(books);
   const newArrivals = books.slice(0, 6);
@@ -11,7 +11,7 @@ const NewArrivals = async () => {
   console.log(newArrivals);
 
   return (
-    <section className="mt-12 mx-auto max-w-7xl">
+    <section className="mt-12 mx-auto w-full max-w-7xl px-6 sm:px-10  lg:px-16">
       <div className="mb-10 text-center">
         <h2 className="font-serif text-3xl font-bold  text-[#20392C] sm:text-4xl md:text-5xl">
           New Arrivals
@@ -30,7 +30,7 @@ const NewArrivals = async () => {
           </div>
         }
       >
-        <BooksCard />
+        <BooksCard bookInfo={newArrivals} />
       </Suspense>
     </section>
   );

@@ -14,8 +14,35 @@ export default function AddBookPage() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const bookData = Object.fromEntries(formData.entries());
+    // const bookData = Object.fromEntries(formData.entries());
+    // console.log(bookData);
 
+    const image = formData.get("image") as File;
+
+    if (!image || image.size === 0) {
+      toast.error("Please Select a book image");
+      return;
+    }
+    const imageData = new FormData();
+    imageData.append("image", image);
+
+    const imageRes = await fetch(
+      `https://api.imgbb.com/1/upload?key=${process.env.IMGBB_API_KEY}`,
+      {
+        method: "POST",
+        body: imageData,
+      },
+    );
+
+    const imageResult = await imageRes.json();
+
+    if (!imageRes.ok || !imageResult.success) {
+      toast.error("Image upload failed!");
+      return;
+    }
+
+    const bookData = Object.fromEntries(formData.entries());
+    bookData.image = imageResult.data.url;
     console.log(bookData);
 
     const res = await fetch("http://localhost:8000/add-book", {
@@ -138,14 +165,14 @@ export default function AddBookPage() {
             htmlFor="image"
             className="mb-2 block text-sm font-medium text-gray-700"
           >
-            Book Cover Image URL
+            Choose Book Image
           </label>
           <input
             id="image"
             name="image"
-            type="url"
-            placeholder="https://example.com/book-cover.jpg"
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#174D38]"
+            type="file"
+            accept="image/jpeg,image/png,image"
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none file:mr-2  file:border file:border-black file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-medium file:text-black file:transition cursor-pointer file:cursor-pointer"
           />
         </div>
 

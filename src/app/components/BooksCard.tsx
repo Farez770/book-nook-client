@@ -11,12 +11,13 @@ import {
 import IBookType from "@/lib/bookType";
 import Image from "next/image";
 import Link from "next/link";
+import { GoArrowUpRight } from "react-icons/go";
 
-export default async function BooksCard() {
-  const res = await fetch("http://localhost:8000/books");
-  const bookInfo: IBookType[] = await res.json();
-  console.log(bookInfo);
-
+export default async function BooksCard({
+  bookInfo,
+}: {
+  bookInfo: IBookType[];
+}) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {bookInfo.map((book) => (
@@ -52,7 +53,7 @@ export default async function BooksCard() {
           <CardFooter className="mt-auto p-5 pt-0">
             <Link href={`/books/${book._id}`} className="w-full">
               <Button className="w-full cursor-pointer rounded-lg bg-[#174D38] text-white transition-colors hover:bg-[#103B2A]">
-                View Details
+                View Details <GoArrowUpRight className="size-5" />
               </Button>
             </Link>
           </CardFooter>

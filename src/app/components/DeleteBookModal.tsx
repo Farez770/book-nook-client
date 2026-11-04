@@ -1,9 +1,21 @@
 "use client";
 
-import { Button, Modal } from "@heroui/react";
+import { Button, Modal, toast } from "@heroui/react";
 import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-const DeleteBookModal = () => {
+const DeleteBookModal = ({ bookId }: { bookId: string }) => {
+  const router = useRouter();
+  const handleDeleteBook = async () => {
+    const res = await fetch(`http://localhost:8000/books/${bookId}`, {
+      method: "DELETE",
+    });
+    await res.json();
+
+    toast.success("The book is delete from your Book list");
+    router.refresh();
+  };
+
   return (
     <Modal>
       <Button
@@ -51,6 +63,7 @@ const DeleteBookModal = () => {
 
               <Button
                 type="button"
+                onClick={handleDeleteBook}
                 className="w-full cursor-pointer rounded-lg bg-red-600 px-5 py-2.5 font-semibold text-white shadow-sm transition hover:bg-red-700 sm:w-auto"
               >
                 <Trash2 size={16} />

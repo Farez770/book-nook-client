@@ -119,8 +119,8 @@ const MyBookPage = async () => {
                         <Pencil size={15} />
                         Edit
                       </button> */}
-                      <EditBookModal />
-                      <DeleteBookModal />
+                      <EditBookModal bookData={book} />
+                      <DeleteBookModal bookId={book._id} />
                       {/* <button
                         type="button"
                         className="inline-flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 cursor-pointer"

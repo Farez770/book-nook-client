@@ -32,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       {/*${geistSans.variable} ${geistMono.variable} */}
       <body className="min-h-screen flex flex-col bg-[#FAF9F6]">
         <Toast.Provider placement="top end" />
-        <Toaster />
+        {/* <Toaster /> */}
         <Suspense>
           <Navbar />
         </Suspense>

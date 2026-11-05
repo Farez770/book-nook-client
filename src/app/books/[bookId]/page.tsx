@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import IBookType from "@/lib/bookType";
 import NotFound from "@/app/not-found";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const BookDetailsPage = async ({
   params,
@@ -14,8 +17,10 @@ const BookDetailsPage = async ({
 }) => {
   const { bookId } = await params;
   //   const book = await getBookInfo(bookId);
-
-  const res = await fetch(`http://localhost:8000/books/${bookId}`);
+  const token = await getTokenFromServer();
+  const res = await fetch(`http://localhost:8000/books/${bookId}`, {
+    headers: { authorization: `Bearer ${token}` },
+  });
   if (!res.ok) {
     NotFound();
   }
@@ -74,22 +79,20 @@ const BookDetailsPage = async ({
 
               <div className="border-t border-border/70 pt-4 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0">
                 <p className="text-sm text-muted-foreground">Copies left</p>
-                <p className="mt-1 text-3xl font-bold text-emerald-600">
-                  {book.totalCopies}
-                </p>
+                <p className="mt-1 text-3xl font-bold">{book.totalCopies}</p>
               </div>
             </CardContent>
           </Card>
 
           <div className="mt-7 flex flex-wrap items-center gap-4">
-            <Button className="h-12 rounded-lg bg-emerald-600 px-6 font-semibold text-white hover:bg-emerald-700">
+            <Button className="h-12 rounded-lg  px-6 font-semibold text-white bg-[#174D38]  transition-colors hover:bg-[#103B2A] cursor-pointer">
               <BookOpen size={18} />
               Borrow This Book
             </Button>
 
             <Link
               href="/books"
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-emerald-600"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-[#174D38]"
             >
               <ArrowLeft size={16} />
               Back to all books

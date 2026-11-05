@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import React from "react";
 import DeleteBookModal from "../components/DeleteBookModal";
 import EditBookModal from "../components/EditBookModal";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const MyBookPage = async () => {
   const session = await auth.api.getSession({
@@ -15,7 +16,11 @@ const MyBookPage = async () => {
 
   const user = session?.user;
 
-  const res = await fetch(`http://localhost:8000/my-booking/${user?.email}`);
+  const token = await getTokenFromServer();
+
+  const res = await fetch(`http://localhost:8000/my-booking/${user?.email}`, {
+    headers: { authorization: `Bearer ${token}` },
+  });
   const bookings: IBookType[] = await res.json();
   console.log(bookings);
 

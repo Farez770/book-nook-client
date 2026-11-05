@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, BookPlus } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 // import { toast } from "@heroui/react";
 
 export default function AddBookPage() {
@@ -45,11 +46,13 @@ export default function AddBookPage() {
     bookData.image = imageResult.data.url;
     console.log(bookData);
 
+    const token = await getTokenFromClient();
+
     const res = await fetch("http://localhost:8000/add-book", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(bookData),
     });

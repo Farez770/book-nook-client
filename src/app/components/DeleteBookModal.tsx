@@ -1,14 +1,20 @@
 "use client";
 
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { Button, Modal, toast } from "@heroui/react";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const DeleteBookModal = ({ bookId }: { bookId: string }) => {
   const router = useRouter();
+
   const handleDeleteBook = async () => {
+    const token = await getTokenFromClient();
     const res = await fetch(`http://localhost:8000/books/${bookId}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
     await res.json();
 

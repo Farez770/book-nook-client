@@ -18,6 +18,7 @@ import IBookType from "@/lib/bookType";
 
 import { useRouter } from "next/navigation";
 import { toast } from "@heroui/react";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const EditBookModal = ({ bookData }: { bookData: IBookType }) => {
   console.log("form Edit modal", bookData);
@@ -32,10 +33,13 @@ const EditBookModal = ({ bookData }: { bookData: IBookType }) => {
     const booksInfo = Object.fromEntries(formData.entries());
     console.log("from Edit modal", booksInfo);
 
+    const token = await getTokenFromClient();
+
     const res = await fetch(`http://localhost:8000/books/${bookData._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(booksInfo),
     });

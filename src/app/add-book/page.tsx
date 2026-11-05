@@ -2,9 +2,9 @@
 import Link from "next/link";
 import { ArrowLeft, BookPlus } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
-import { toast } from "sonner";
+
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
-// import { toast } from "@heroui/react";
+import { toast } from "@heroui/react";
 
 export default function AddBookPage() {
   const { data: session } = authClient.useSession();
@@ -21,7 +21,7 @@ export default function AddBookPage() {
     const image = formData.get("image") as File;
 
     if (!image || image.size === 0) {
-      toast.error("Please Select a book image");
+      toast.warning("Please Select a book image");
       return;
     }
     const imageData = new FormData();
@@ -44,11 +44,12 @@ export default function AddBookPage() {
     const imageResult = await imageRes.json();
 
     if (!imageRes.ok || !imageResult.success) {
-      toast.error("Image upload failed!");
+      toast.warning("Image upload failed!");
       return;
     }
 
-    const bookData = Object.fromEntries(formData.entries());
+    const bookData: Record<string, FormDataEntryValue | number> =
+      Object.fromEntries(formData.entries());
     bookData.image = imageResult.data.url;
 
     // form fields arrive as strings, totalCopies must be a real number
@@ -71,8 +72,6 @@ export default function AddBookPage() {
     console.log(result);
 
     form.reset();
-
-    // toast.success("Your Book added successfully! 📚");
     toast.success("Your book has been added successfully!");
   };
 

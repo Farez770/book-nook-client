@@ -9,7 +9,13 @@ export default async function Home() {
   return (
     <div>
       <HeroBanner />
-      <Suspense fallback={<div>New Arrivals Books is Loading....</div>}>
+      <Suspense
+        fallback={
+          <div className="py-16 text-center text-[#68746B]">
+            New Arrivals Books is Loading....
+          </div>
+        }
+      >
         <NewArrivals />
       </Suspense>
       <HowItWorks />

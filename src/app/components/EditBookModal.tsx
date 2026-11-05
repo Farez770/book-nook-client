@@ -32,10 +32,13 @@ const EditBookModal = ({ bookData }: { bookData: IBookType }) => {
     const formData = new FormData(form);
     const booksInfo = Object.fromEntries(formData.entries());
 
-    // form fields arrive as strings, totalCopies must be a real number
-    booksInfo.totalCopies = Number(booksInfo.totalCopies) || 0;
+    // FormData values are strings; send totalCopies as a number.
+    const updatedBooksInfo = {
+      ...booksInfo,
+      totalCopies: Number(booksInfo.totalCopies) || 0,
+    };
 
-    console.log("from Edit modal", booksInfo);
+    console.log("from Edit modal", updatedBooksInfo);
 
     const token = await getTokenFromClient();
 
@@ -45,7 +48,7 @@ const EditBookModal = ({ bookData }: { bookData: IBookType }) => {
         "Content-Type": "application/json",
         authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(booksInfo),
+      body: JSON.stringify(updatedBooksInfo),
     });
 
     if (!res.ok) {

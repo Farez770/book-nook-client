@@ -1,6 +1,8 @@
 import IBookType from "@/lib/bookType";
 import React, { Suspense } from "react";
 import BooksCard from "../BooksCard";
+import Link from "next/link";
+import { GoArrowRight } from "react-icons/go";
 
 const NewArrivals = async () => {
   const res = await fetch("http://localhost:8000/new-arrivals");
@@ -32,6 +34,15 @@ const NewArrivals = async () => {
       >
         <BooksCard bookInfo={newArrivals} />
       </Suspense>
+
+      <div className="pt-8 text-center text-[#0a4b1a] cursor-pointer ">
+        <Link
+          href="/books"
+          className="inline-flex w-fit items-center justify-center gap-2 rounded-lg bg-[#174D38] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#103B2A]"
+        >
+          See All Books <GoArrowRight />
+        </Link>
+      </div>
     </section>
   );
 };

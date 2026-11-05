@@ -46,7 +46,7 @@ export default async function BooksCard({
             <CardTitle className="line-clamp-2 font-serif text-xl font-bold text-[#20392C]">
               {book.title}
             </CardTitle>
-            <CardDescription className="line-clamp-3 text-sm leading-6 text-[#68746B]">
+            <CardDescription className="line-clamp-3 text-sm leading-5 text-[#68746B]">
               {book.description}
             </CardDescription>
           </CardHeader>

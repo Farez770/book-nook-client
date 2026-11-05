@@ -30,7 +30,9 @@ BookNook is a modern online library platform where readers can explore books, di
 - shadcn/ui
 - HeroUI
 - Lucide React
+- React icons
 - Swiper.js
+- ImgBB API
 
 ### Backend
 
@@ -40,7 +42,6 @@ BookNook is a modern online library platform where readers can explore books, di
 - MongoDB
 - Better Auth
 - JSON Web Token (JWT)
-- ImgBB API
 
 ## 🔐 Authentication & Security
 
@@ -62,7 +63,7 @@ BookNook is a modern online library platform where readers can explore books, di
 ### Frontend Setup
 
 ```bash
-git clone YOUR_CLIENT_REPOSITORY_URL
+git clone https://github.com/Farez770/book-nook-client.git
 cd booknook-client
 npm install
 npm run dev
@@ -71,10 +72,16 @@ npm run dev
 ### Backend Setup
 
 ```bash
-git clone YOUR_SERVER_REPOSITORY_URL
+git clone https://github.com/Farez770/book-nook-server.git
 cd booknook-server
 npm install
 npm run dev
+
+or
+
+install mongodb, cors, express, dotenv, jose, nodemon
+
+nodemon index.js
 ```
 
 ## ⚙️ Environment Variables
@@ -87,23 +94,25 @@ Configure the required environment variables in your `.env` files.
 - BETTER_AUTH_SECRET
 - NEXT_PUBLIC_SERVER_URL
 - Google authentication credentials
+- IMGBB_API_KEY
 
 ### Backend
 
 - MONGODB_URI
 - CLIENT_URL
-- IMGBB_API_KEY
 
 Never commit actual environment variables or secret credentials to GitHub.
 
 ## 📂 Project Repositories
 
-- **Client Repository:** [GitHub Client Repository](YOUR_CLIENT_REPOSITORY_URL)
-- **Server Repository:** [GitHub Server Repository](YOUR_SERVER_REPOSITORY_URL)
+- **Client Repository:** [https://github.com/Farez770/book-nook-client.git](YOUR_CLIENT_REPOSITORY_URL)
+- **Server Repository:** [https://github.com/Farez770/book-nook-server.git](YOUR_SERVER_REPOSITORY_URL)
 
 ## 👨‍💻 Author
 
 Developed with ❤️ as a full-stack web development project.
+
+##
 
 **BookNook – Discover, Borrow, and Enjoy Reading!**
 

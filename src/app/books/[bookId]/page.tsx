@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import IBookType from "@/lib/bookType";
 import NotFound from "@/app/not-found";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+
 import { getTokenFromServer } from "@/lib/getTokenFromServer";
+import BorrowBtnModal from "@/app/components/BorrowBtnModal";
 
 const BookDetailsPage = async ({
   params,
@@ -22,13 +22,13 @@ const BookDetailsPage = async ({
     headers: { authorization: `Bearer ${token}` },
   });
   if (!res.ok) {
-    NotFound();
+    return <NotFound />;
   }
   const book: IBookType = await res.json();
   console.log("From Book details page", book);
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:py-16">
+    <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:pb-16 lg:pt-10">
       <div className="grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-[minmax(260px,380px)_1fr] md:gap-12 lg:gap-16">
         <div className="flex justify-center md:justify-start">
           <div className="relative w-full max-w-[340px] overflow-hidden rounded-xl border border-white/10 shadow-xl sm:max-w-[380px]">
@@ -37,6 +37,7 @@ const BookDetailsPage = async ({
               alt="Pride and Prejudice book cover"
               width={380}
               height={570}
+              loading="eager"
               className="h-auto max-h-[620px] w-full object-contain"
             />
           </div>
@@ -85,10 +86,11 @@ const BookDetailsPage = async ({
           </Card>
 
           <div className="mt-7 flex flex-wrap items-center gap-4">
-            <Button className="h-12 rounded-lg  px-6 font-semibold text-white bg-[#174D38]  transition-colors hover:bg-[#103B2A] cursor-pointer">
+            {/* <Button className="h-12 rounded-lg  px-6 font-semibold text-white bg-[#174D38]  transition-colors hover:bg-[#103B2A] cursor-pointer">
               <BookOpen size={18} />
               Borrow This Book
-            </Button>
+            </Button> */}
+            <BorrowBtnModal book={book} />
 
             <Link
               href="/books"

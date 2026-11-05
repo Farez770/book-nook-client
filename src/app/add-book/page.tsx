@@ -28,12 +28,18 @@ export default function AddBookPage() {
     imageData.append("image", image);
 
     const imageRes = await fetch(
-      `https://api.imgbb.com/1/upload?key=${process.env.IMGBB_API_KEY}`,
+      `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
       {
         method: "POST",
         body: imageData,
       },
     );
+
+    console.log(
+      "ImgBB API Key exists:",
+      !!process.env.NEXT_PUBLIC_IMGBB_API_KEY,
+    );
+    console.log(imageRes);
 
     const imageResult = await imageRes.json();
 
@@ -44,6 +50,10 @@ export default function AddBookPage() {
 
     const bookData = Object.fromEntries(formData.entries());
     bookData.image = imageResult.data.url;
+
+    // form fields arrive as strings, totalCopies must be a real number
+    bookData.totalCopies = Number(bookData.totalCopies) || 0;
+
     console.log(bookData);
 
     const token = await getTokenFromClient();
@@ -63,7 +73,7 @@ export default function AddBookPage() {
     form.reset();
 
     // toast.success("Your Book added successfully! 📚");
-    toast.success("Your Book added successfully!");
+    toast.success("Your book has been added successfully!");
   };
 
   return (

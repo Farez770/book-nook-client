@@ -31,6 +31,10 @@ const EditBookModal = ({ bookData }: { bookData: IBookType }) => {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const booksInfo = Object.fromEntries(formData.entries());
+
+    // form fields arrive as strings, totalCopies must be a real number
+    booksInfo.totalCopies = Number(booksInfo.totalCopies) || 0;
+
     console.log("from Edit modal", booksInfo);
 
     const token = await getTokenFromClient();

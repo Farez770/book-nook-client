@@ -105,8 +105,8 @@ Never commit actual environment variables or secret credentials to GitHub.
 
 ## 📂 Project Repositories
 
-- **Client Repository:** [https://github.com/Farez770/book-nook-client.git](YOUR_CLIENT_REPOSITORY_URL)
-- **Server Repository:** [https://github.com/Farez770/book-nook-server.git](YOUR_SERVER_REPOSITORY_URL)
+- **Client Repository:** [https://github.com/Farez770/book-nook-client.git]
+- **Server Repository:** [https://github.com/Farez770/book-nook-server.git]
 
 ## 👨‍💻 Author
 

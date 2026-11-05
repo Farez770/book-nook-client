@@ -10,12 +10,15 @@ const DeleteBookModal = ({ bookId }: { bookId: string }) => {
 
   const handleDeleteBook = async () => {
     const token = await getTokenFromClient();
-    const res = await fetch(`http://localhost:8000/books/${bookId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/books/${bookId}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     await res.json();
 
     toast.success("The book is delete from your Book list");

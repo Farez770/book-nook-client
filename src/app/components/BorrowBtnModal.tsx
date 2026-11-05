@@ -40,7 +40,7 @@ export default function BorrowBtnModal({ book }: { book: IBookType }) {
     try {
       const token = await getTokenFromClient();
 
-      const res = await fetch(`http://localhost:8000/borrows`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/borrows`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

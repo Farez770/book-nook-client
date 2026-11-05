@@ -16,12 +16,15 @@ const ReturnBookButton = ({ borrowId }: { borrowId: string }) => {
     try {
       const token = await getTokenFromClient();
 
-      const res = await fetch(`http://localhost:8000/borrows/${borrowId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/borrows/${borrowId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       const result = await res.json();
 
@@ -34,7 +37,7 @@ const ReturnBookButton = ({ borrowId }: { borrowId: string }) => {
       router.refresh();
     } catch (error) {
       console.error("Return Book Error:", error);
-      toast.error("Something went wrong! Please try again.");
+      toast.warning("Something went wrong! Please try again.");
     } finally {
       setIsReturning(false);
     }

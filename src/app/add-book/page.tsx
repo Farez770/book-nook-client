@@ -59,7 +59,7 @@ export default function AddBookPage() {
 
     const token = await getTokenFromClient();
 
-    const res = await fetch("http://localhost:8000/add-book", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-book`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

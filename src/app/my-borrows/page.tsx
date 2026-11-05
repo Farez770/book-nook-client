@@ -19,7 +19,7 @@ const MyBorrowsPage = async () => {
   let hasError = false;
 
   try {
-    const res = await fetch("http://localhost:8000/borrows", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/borrows`, {
       headers: { authorization: `Bearer ${token}` },
       cache: "no-store",
     });

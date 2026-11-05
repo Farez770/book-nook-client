@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, BookOpen } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import IBookType from "@/lib/bookType";
 import NotFound from "@/app/not-found";
@@ -18,9 +17,12 @@ const BookDetailsPage = async ({
   const { bookId } = await params;
   //   const book = await getBookInfo(bookId);
   const token = await getTokenFromServer();
-  const res = await fetch(`http://localhost:8000/books/${bookId}`, {
-    headers: { authorization: `Bearer ${token}` },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/books/${bookId}`,
+    {
+      headers: { authorization: `Bearer ${token}` },
+    },
+  );
   if (!res.ok) {
     return <NotFound />;
   }

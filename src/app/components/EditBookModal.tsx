@@ -42,14 +42,17 @@ const EditBookModal = ({ bookData }: { bookData: IBookType }) => {
 
     const token = await getTokenFromClient();
 
-    const res = await fetch(`http://localhost:8000/books/${bookData._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/books/${bookData._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedBooksInfo),
       },
-      body: JSON.stringify(updatedBooksInfo),
-    });
+    );
 
     if (!res.ok) {
       console.error("Failed to update book, status:", res.status);

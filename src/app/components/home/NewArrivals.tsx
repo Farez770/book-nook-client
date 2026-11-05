@@ -5,7 +5,7 @@ import Link from "next/link";
 import { GoArrowRight } from "react-icons/go";
 
 const NewArrivals = async () => {
-  const res = await fetch("http://localhost:8000/new-arrivals");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/new-arrivals`);
   const books: IBookType[] = await res.json();
   console.log(books);
   const newArrivals = books.slice(0, 6);

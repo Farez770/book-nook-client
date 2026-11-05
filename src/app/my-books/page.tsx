@@ -18,9 +18,12 @@ const MyBookPage = async () => {
 
   const token = await getTokenFromServer();
 
-  const res = await fetch(`http://localhost:8000/my-booking/${user?.email}`, {
-    headers: { authorization: `Bearer ${token}` },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/my-booking/${user?.email}`,
+    {
+      headers: { authorization: `Bearer ${token}` },
+    },
+  );
   const bookings: IBookType[] = await res.json();
   // console.log(bookings);
 
